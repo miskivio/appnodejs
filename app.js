@@ -22,16 +22,24 @@ connectDB()
 
 const app = express()
 
+//Body parser
+app.use(express.urlencoded())
+
+app.use(express.json())
+
 if(process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
 }
 
-//static folder
 
+//handlebar halpers
+const {formatDate, stripTags, truncate} = require('./helpers/hbs')
+
+//static folder
 app.use(express.static(path.join(__dirname, 'public')))
  
 //Handlebars
-app.engine('.hbs', exphbs({defaultLayout:'main', extname: '.hbs'}))
+app.engine('.hbs', exphbs({helpers: {formatDate, stripTags, truncate}, defaultLayout:'main', extname: '.hbs'}))
 app.set('view engine', '.hbs')
 
 //session
@@ -49,6 +57,7 @@ app.use(passport.session())
 //Routes
 app.use('/', router)
 app.use('/auth', router) 
+app.use('/stories', require('./routes/stories')) 
 
 const PORT = process.env.PORT || 5000
 

@@ -31,11 +31,11 @@ router.get('/tools', ensureAuth, async (req,res) => {
     try {
         const stories = await Story.find({user: req.user.id}).lean()
         res.render('tools',{
-            name: req.user.firstNamem,
+            name: req.user.firstName,
             stories
         })
     } catch (err) {
-        console.error(err)
+        res.render('error/500')
     }
 
 })

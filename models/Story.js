@@ -21,11 +21,11 @@ const StorySchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now()
     }
 })
 
-const User = mongoose.model('Story', StorySchema)
+const Story = mongoose.model('Story', StorySchema)
 
-module.exports = User
+module.exports = Story
 
